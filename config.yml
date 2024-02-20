@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+database:
+  dbname: "instance"
+  dbuser: "dbuser"
+  dbpassword: "dbpassword"
+
+API_KEY: ""
