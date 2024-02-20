@@ -3,42 +3,49 @@ package main
 import (
 	"context"
 	"fmt"
+
 	// "weather-api/application"
 	"github.com/alokgarg-dev/weather-api/application"
 
 	"github.com/spf13/viper"
-
-	// c "github.com/alokgarg-dev/weather-api/config"
 )
 
-func main() {
+func readConfigFile() error {
 	viper.SetConfigName("config")
 
 	// Set the path to look for the configurations file
 	viper.AddConfigPath(".")
 
 	// Enable VIPER to read Environment Variables
-	// viper.AutomaticEnv()
+	viper.AutomaticEnv()
 
 	viper.SetConfigType("yml")
-	// var configuration c.Configurations
 
+	var err error
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Printf("Error reading config file, %s", err)
+	}
+	return err
+}
+
+func main() {
+	if err := readConfigFile(); err != nil {
+		fmt.Println("Exiting from main")
 	}
 
 	// Set undefined variables
 	viper.SetDefault("database.dbname", "test_db")
 
-	fmt.Println("API_KEYis\t", viper.GetString("API_KEY"))
+	fmt.Println("API_KEY is ", viper.GetString("API_KEY"))
 
 	/*
-	err := viper.Unmarshal(&configuration)
-	if err != nil {
-		fmt.Printf("Unable to decode into struct, %v", err)
-	}
+		var configuration c.Configurations
+		err := viper.Unmarshal(&configuration)
+		if err != nil {
+			fmt.Printf("Unable to decode into struct, %v", err)
+		}
 
-	fmt.Println("API_KEY is\t", configuration.ApiKey)
+		fmt.Println("API_KEY is \t", configuration.ApiKey)
 	*/
 
 	app := application.New()

@@ -18,7 +18,7 @@ func loadRoutes() *chi.Mux {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	router.Route("/weather", loadWeatherRoutes)
+	router.Route("/", loadWeatherRoutes)
 
 	return router
 }
@@ -26,5 +26,5 @@ func loadRoutes() *chi.Mux {
 func loadWeatherRoutes(router chi.Router) {
 	weatherHandler := &handler.Weather{}
 
-	router.Get("/view?lat={lat}&long={long}", weatherHandler.Get)
+	router.Get("/weather", weatherHandler.Get)
 }
