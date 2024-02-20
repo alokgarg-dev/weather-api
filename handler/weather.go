@@ -56,6 +56,7 @@ func (wt *Weather) Get(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Invalid Request received"))
 		return
 	}
 
@@ -63,6 +64,7 @@ func (wt *Weather) Get(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Invalid Json Response from OpenWeather Api"))
 		return
 	}
 
@@ -70,6 +72,7 @@ func (wt *Weather) Get(w http.ResponseWriter, r *http.Request) {
 	// Unmarshal or Decode the JSON to the interface.
 	if err = json.Unmarshal([]byte(body), &response); err != nil {
 		log.Println(err)
+		w.Write([]byte("Unable to parse Json Response from OpenWeather Api"))
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
