@@ -1,4 +1,4 @@
-module github.com/alokgarg-dev/microservice-weather.git
+module github.com/alokgarg-dev/weather-api
 
 go 1.22.0
 
